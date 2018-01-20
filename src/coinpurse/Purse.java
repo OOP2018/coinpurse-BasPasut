@@ -116,7 +116,7 @@ public class Purse {
 					return -1;
 				if (o1.getValue() == o2.getValue())
 					return 0;
-				if (o1.getValue() - o2.getValue() < 0)
+				if (o2.getValue() - o1.getValue() < 0)
 					return -1;
 				return 1;
 			}
