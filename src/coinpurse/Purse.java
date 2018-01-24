@@ -61,7 +61,6 @@ public class Purse {
 	 * 
 	 * @return the capacity
 	 */
-	// TODO write accessor method for capacity. Use Java naming convention.
 	public int getCapacity() {
 		return capacity;
 	}
