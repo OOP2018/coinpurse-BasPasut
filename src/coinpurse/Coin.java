@@ -6,7 +6,7 @@ package coinpurse;
  *
  * @param <Coin>
  */
-public class Coin implements Comparable<Coin>{
+public class Coin implements Comparable<Coin>, Valuable{
 	
 	private double value;
 	private String currency;
@@ -17,6 +17,9 @@ public class Coin implements Comparable<Coin>{
 	 * @param currency
 	 */
 	public Coin(double value, String currency){
+		if(value <= 0){
+			this.value = 0;
+		}
 		this.value = value;
 		this.currency = currency;
 	}
@@ -80,6 +83,5 @@ public class Coin implements Comparable<Coin>{
 			return true;
 		return false;
 	}
-
-
+	
 }
