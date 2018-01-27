@@ -19,8 +19,9 @@ public class MoneyUtil {
 	 * @param lc
 	 *            is a list of coin that you want to sort.
 	 */
-	public static void sortCoins(List<Coin> lc) {
-		Collections.sort(lc);
+	public static void sortCoins(List<Valuable> lc) {
+		Comparator<Valuable> sortedVal = new ValueComparator();
+		Collections.sort(lc,sortedVal);
 	}
 
 	/**
@@ -29,8 +30,8 @@ public class MoneyUtil {
 	 * @param c
 	 *            is a list of coin that you want to print.
 	 */
-	public static void printCoins(List<Coin> c) {
-		for (Coin coin : c) {
+	public static void printCoins(List<Valuable> c) {
+		for (Valuable coin : c) {
 			System.out.println(coin);
 		}
 	}
@@ -46,8 +47,8 @@ public class MoneyUtil {
 	 * @return a new List containing only the elements from coins that have the
 	 *         requested currency.
 	 */
-	public static List<Coin> filterByCurrency(List<Coin> coins, String currency) {
-		List<Coin> sortByCurrency = new ArrayList<Coin>();
+	public static List<Valuable> filterByCurrency(List<Valuable> coins, String currency) {
+		List<Valuable> sortByCurrency = new ArrayList<Valuable>();
 		for (int i = 0; i < coins.size(); i++) {
 			if (coins.get(i).getCurrency().equalsIgnoreCase(currency)) {
 				sortByCurrency.add(coins.get(i));

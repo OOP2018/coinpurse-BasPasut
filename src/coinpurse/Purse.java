@@ -6,14 +6,16 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * A coin purse contains coins. You can insert coins, withdraw money, check the
+ * A purse contains coins and bank notes. You can insert coins or bank notes, withdraw money, check the
  * balance, and check if the purse is full.
  * 
  * @author BasPasut
  */
 public class Purse {
 	/** Collection of objects in the purse. */
-	private List<Coin> money;
+	private List<Valuable> money;
+	
+	private Comparator<Valuable> sortedMoney;
 
 	/**
 	 * Capacity is maximum number of items the purse can hold. Capacity is set
@@ -25,19 +27,20 @@ public class Purse {
 	 * Create a purse with a specified capacity.
 	 * 
 	 * @param capacity
-	 *            is maximum number of coins you can put in purse.
+	 *            is maximum number of coins or bank notes you can put in purse.
 	 */
 	public Purse(int capacity) {
 		this.capacity = capacity;
 		this.money = new ArrayList<>();
+		this.sortedMoney = new ValueComparator();
 
 	}
 
 	/**
-	 * Count and return the number of coins in the purse. This is the number of
-	 * coins, not their value.
+	 * Count and return the number of coins or bank notes in the purse. This is the number of
+	 * coins or bank notes, not their value.
 	 * 
-	 * @return the number of coins in the purse
+	 * @return the number of coins or bank notes in the purse
 	 */
 	public int count() {
 		return money.size();
@@ -57,7 +60,7 @@ public class Purse {
 	}
 
 	/**
-	 * Return the capacity of the coin purse.
+	 * Return the capacity of the purse.
 	 * 
 	 * @return the capacity
 	 */
@@ -86,7 +89,7 @@ public class Purse {
 	 *            is a Coin object to insert into purse
 	 * @return true if coin inserted, false if can't insert
 	 */
-	public boolean insert(Coin coin) {
+	public boolean insert(Valuable coin) {
 		if (isFull() == true) {
 			return false;
 		}
@@ -98,31 +101,20 @@ public class Purse {
 	}
 
 	/**
-	 * Withdraw the requested amount of money. Return an array of Coins
+	 * Withdraw the requested amount of money. Return an array of Valuable
 	 * withdrawn from purse, or return null if cannot withdraw the amount
 	 * requested.
 	 * 
 	 * @param amount
 	 *            is the amount to withdraw
-	 * @return array of Coin objects for money withdrawn, or null if cannot
+	 * @return array of Valuable objects for money withdrawn, or null if cannot
 	 *         withdraw requested amount.
 	 */
-	public Coin[] withdraw(double amount) {
-		Collections.sort(money, new Comparator<Coin>() {
-			@Override
-			public int compare(Coin o1, Coin o2) {
-				if (o1 == null || o2 == null)
-					return -1;
-				if (o1.getValue() == o2.getValue())
-					return 0;
-				if (o2.getValue() - o1.getValue() < 0)
-					return -1;
-				return 1;
-			}
-
-		});
-
-		List<Coin> temporaryList = new ArrayList<Coin>();
+	public Valuable[] withdraw(double amount) {
+		
+		Collections.sort(money,sortedMoney);
+		
+		List<Valuable> temporaryList = new ArrayList<Valuable>();
 		for (int i = 0; i < money.size(); i++) {
 			if (money.get(i).getValue() <= amount) {
 				temporaryList.add(money.get(i));
@@ -141,7 +133,7 @@ public class Purse {
 			}
 		}
 
-		Coin[] array = new Coin[temporaryList.size()];
+		Valuable[] array = new Valuable[temporaryList.size()];
 		temporaryList.toArray(array);
 		return array;
 	}

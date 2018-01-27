@@ -7,7 +7,7 @@ package coinpurse;
  *
  * @param <Coin>
  */
-public class Coin implements Comparable<Coin>, Valuable {
+public class Coin implements Valuable {
 
 	private double value;
 	private String currency;
@@ -54,24 +54,6 @@ public class Coin implements Comparable<Coin>, Valuable {
 	public String toString() {
 		return value + "-" + currency;
 
-	}
-
-	/**
-	 * This method test that this money and another money which has more value.
-	 * If this money has more value, return 1. If it's equal, return 0. If it
-	 * has less value, return -1.
-	 * 
-	 * @param c
-	 * @return
-	 */
-	public int compareTo(Coin c) {
-		if (c == null)
-			return -1;
-		if (this.value < c.getValue())
-			return -1;
-		else if (this.value > c.getValue())
-			return 1;
-		return 0;
 	}
 
 	/**
