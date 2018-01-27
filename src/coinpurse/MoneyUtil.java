@@ -57,20 +57,20 @@ public class MoneyUtil {
 		return sortByCurrency;
 	}
 
-	// public static void main(String[] args) {
-	// List<Coin> coins = new ArrayList<Coin>();
-	// coins.add(new Coin(10.0, "Baht"));
-	// coins.add(new Coin(50.5, "Baht"));
-	// coins.add(new Coin(5.8, "Baht"));
-	// coins.add(new Coin(54.2, "Ringgit"));
-	// coins.add(new Coin(100, "Yuan"));
-	// coins.add(new Coin(12.4, "Ringgit"));
-	//
-	// printCoins(coins);
-	// System.out.println("---------------------");
-	// sortCoins(coins);
-	// printCoins(coins);
-	// System.out.println("---------------------");
-	// printCoins(filterByCurrency(coins, "Ringgit"));
-	// }
+//	 public static void main(String[] args) {
+//	 List<Valuable> vals = new ArrayList<Valuable>();
+//	 vals.add(new Coin(10.0, "Baht"));
+//	 vals.add(new Coin(50.5, "Baht"));
+//	 vals.add(new Coin(5.8, "Baht"));
+//	 vals.add(new Coin(54.2, "Ringgit"));
+//	 vals.add(new Coin(100, "Yuan"));
+//	 vals.add(new Coin(12.4, "Ringgit"));
+//	
+//	 printCoins(vals);
+//	 System.out.println("---------------------");
+//	 sortCoins(vals);
+//	 printCoins(vals);
+//	 System.out.println("---------------------");
+//	 printCoins(filterByCurrency(vals, "dollar"));
+//	 }
 }
