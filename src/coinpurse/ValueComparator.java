@@ -23,6 +23,8 @@ public class ValueComparator implements Comparator<Valuable> {
 				return 0;
 			if (o2.getValue() - o1.getValue() < 0)
 				return -1;
+			if(o2.getValue() - o1.getValue() > 0)
+				return 1;
 		}
 		return o1.getCurrency().compareToIgnoreCase(o2.getCurrency());
 	}
