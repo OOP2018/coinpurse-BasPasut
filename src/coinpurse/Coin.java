@@ -5,7 +5,6 @@ package coinpurse;
  * 
  * @author Pasut Kittiprapas
  *
- * @param <Coin>
  */
 public class Coin implements Valuable {
 

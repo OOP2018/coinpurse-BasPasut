@@ -1,7 +1,7 @@
 package coinpurse;
 
 /**
- * BankNote represents one type of monetary that have fixed value and currency,
+ * 	BankNote represents one type of monetary that have fixed value and currency,
  * but each of them has a unique serial number.
  * 
  * @author Pasut Kittiprapas
@@ -16,6 +16,7 @@ public class BankNote implements Valuable {
 
 	/**
 	 * Create a BankNote with specific value and currency.
+	 * 
 	 * @param value
 	 * @param currency
 	 */
@@ -27,6 +28,7 @@ public class BankNote implements Valuable {
 
 	/**
 	 * Method to get the value of this BankNote.
+	 * 
 	 * @return the value of this BankNote.
 	 */
 	public double getValue() {
@@ -35,6 +37,7 @@ public class BankNote implements Valuable {
 
 	/**
 	 * Method to get the currency of this BankNote.
+	 * 
 	 * @return the currency of this banknote.
 	 */
 	public String getCurrency() {
@@ -43,6 +46,7 @@ public class BankNote implements Valuable {
 
 	/**
 	 * Method to get the serial number of this BankNote.
+	 * 
 	 * @return the serial number of this BankNote.
 	 */
 	public long getSerial() {
@@ -50,8 +54,8 @@ public class BankNote implements Valuable {
 	}
 
 	/**
-	 * This method test whether two bank notes have the same value and currency or not. If it's
-	 * equal, return true. If not, return false.
+	 * This method test whether two bank notes have the same value and currency
+	 * or not. If it's equal, return true. If not, return false.
 	 * 
 	 * @param obj
 	 *            bank note that we want to compare.
@@ -72,10 +76,11 @@ public class BankNote implements Valuable {
 
 	/**
 	 * Method to return the detail of this BankNote.
+	 * 
 	 * @return the detail of this BankNote.
 	 */
 	public String toString() {
-		return value+"-"+currency+" note [" + getSerial() + "]";
+		return value + "-" + currency + " note [" + getSerial() + "]";
 	}
 
 }

@@ -6,15 +6,15 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * A purse contains coins and bank notes. You can insert coins or bank notes, withdraw money, check the
- * balance, and check if the purse is full.
+ * A purse contains coins and bank notes. You can insert coins or bank notes,
+ * withdraw money, check the balance, and check if the purse is full.
  * 
  * @author Pasut Kittiprapas
  */
 public class Purse {
 	/** Collection of objects in the purse. */
 	private List<Valuable> money;
-	
+
 	private Comparator<Valuable> sortedMoney;
 
 	/**
@@ -37,8 +37,8 @@ public class Purse {
 	}
 
 	/**
-	 * Count and return the number of coins or bank notes in the purse. This is the number of
-	 * coins or bank notes, not their value.
+	 * Count and return the number of coins or bank notes in the purse. This is
+	 * the number of coins or bank notes, not their value.
 	 * 
 	 * @return the number of coins or bank notes in the purse
 	 */
@@ -111,9 +111,9 @@ public class Purse {
 	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(double amount) {
-		
-		Collections.sort(money,sortedMoney);
-		
+
+		Collections.sort(money, sortedMoney);
+
 		List<Valuable> temporaryList = new ArrayList<Valuable>();
 		for (int i = 0; i < money.size(); i++) {
 			if (money.get(i).getValue() <= amount) {

@@ -21,7 +21,7 @@ public class MoneyUtil {
 	 */
 	public static void sortCoins(List<Valuable> lc) {
 		Comparator<Valuable> sortedVal = new ValueComparator();
-		Collections.sort(lc,sortedVal);
+		Collections.sort(lc, sortedVal);
 	}
 
 	/**
@@ -37,15 +37,16 @@ public class MoneyUtil {
 	}
 
 	/**
-	 * Method that examines all the coins or bank notes in a List and returns only the coins
-	 * or bank notes that have a currency that matches the parameter value.
+	 * Method that examines all the coins or bank notes in a List and returns
+	 * only the coins or bank notes that have a currency that matches the
+	 * parameter value.
 	 * 
 	 * @param vals
 	 *            is a List of Valuable objects. This list is not modified.
 	 * @param currency
 	 *            is the currency we want. Must not be null.
-	 * @return a new List containing only the elements from valuable that have the
-	 *         requested currency.
+	 * @return a new List containing only the elements from valuable that have
+	 *         the requested currency.
 	 */
 	public static List<Valuable> filterByCurrency(List<Valuable> vals, String currency) {
 		List<Valuable> sortByCurrency = new ArrayList<Valuable>();
