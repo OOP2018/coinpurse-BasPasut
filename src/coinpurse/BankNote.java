@@ -4,7 +4,7 @@ package coinpurse;
  * BankNote represents one type of monetary that have fixed value and currency,
  * but each of them has a unique serial number.
  * 
- * @author BasPasut
+ * @author Pasut Kittiprapas
  *
  */
 public class BankNote implements Valuable {

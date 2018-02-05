@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * Class that sort item that implement Valuable from large to small.
  * 
- * @author BasPasut
+ * @author Pasut Kittiprapas
  *
  */
 public class ValueComparator implements Comparator<Valuable> {

@@ -3,7 +3,7 @@ package coinpurse;
 /**
  * Coin represents coinage (money) with fixed value and currency.
  * 
- * @author BasPasut
+ * @author Pasut Kittiprapas
  *
  * @param <Coin>
  */

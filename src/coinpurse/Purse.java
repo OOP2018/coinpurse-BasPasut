@@ -9,7 +9,7 @@ import java.util.List;
  * A purse contains coins and bank notes. You can insert coins or bank notes, withdraw money, check the
  * balance, and check if the purse is full.
  * 
- * @author BasPasut
+ * @author Pasut Kittiprapas
  */
 public class Purse {
 	/** Collection of objects in the purse. */

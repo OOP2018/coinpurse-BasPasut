@@ -2,7 +2,7 @@ package coinpurse;
 
 /**
  * An interface for objects having a monetary value and currency.
- * @author BasPasut
+ * @author Pasut Kittiprapas
  *
  */
 public interface Valuable {
