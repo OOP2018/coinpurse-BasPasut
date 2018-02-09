@@ -21,9 +21,9 @@ public class ValueComparator implements Comparator<Valuable> {
 		if (o1.getCurrency().compareToIgnoreCase(o2.getCurrency()) == 0) {
 			if (o1.getValue() == o2.getValue())
 				return 0;
-			if (o1.getValue() < o2.getValue())
+			if (o1.getValue() > o2.getValue())
 				return -1;
-			if(o1.getValue() > o2.getValue())
+			if(o1.getValue() < o2.getValue())
 				return 1;
 		}
 		return o1.getCurrency().compareToIgnoreCase(o2.getCurrency());

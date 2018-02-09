@@ -113,10 +113,11 @@ public class Purse {
 	public Valuable[] withdraw(double amount) {
 
 		Collections.sort(money, sortedMoney);
-
+		List<Valuable> curList = MoneyUtil.filterByCurrency(money, "Baht");
 		List<Valuable> temporaryList = new ArrayList<Valuable>();
-		for (int i = 0; i < money.size(); i++) {
-			Valuable m = money.get(i);
+		
+		for (int i = 0; i < curList.size(); i++) {
+			Valuable m = curList.get(i);
 			if (m.getValue() <= amount) {
 				temporaryList.add(m);
 				amount -= m.getValue();
