@@ -82,21 +82,21 @@ public class Purse {
 	}
 
 	/**
-	 * Insert a coin into the purse. The coin is only inserted if the purse has
-	 * space for it and the coin has positive value. No worthless coins!
+	 * Insert a money into the purse. The money is only inserted if the purse
+	 * has space for it and the money has positive value. No worthless money!
 	 * 
-	 * @param coin
-	 *            is a Coin object to insert into purse
-	 * @return true if coin inserted, false if can't insert
+	 * @param money
+	 *            is a Money object to insert into purse
+	 * @return true if money inserted, false if can't insert
 	 */
-	public boolean insert(Valuable coin) {
+	public boolean insert(Valuable money) {
 		if (isFull() == true) {
 			return false;
 		}
-		if (coin.getValue() <= 0) {
+		if (money.getValue() <= 0) {
 			return false;
 		}
-		this.money.add(coin);
+		this.money.add(money);
 		return true;
 	}
 
@@ -116,13 +116,16 @@ public class Purse {
 
 		List<Valuable> temporaryList = new ArrayList<Valuable>();
 		for (int i = 0; i < money.size(); i++) {
-			if (money.get(i).getValue() <= amount) {
-				temporaryList.add(money.get(i));
-				amount -= money.get(i).getValue();
+			Valuable m = money.get(i);
+			if (m.getValue() <= amount) {
+				temporaryList.add(m);
+				amount -= m.getValue();
 			}
 		}
+
+		// Check to see if we successfully found exact amount
 		if (amount != 0) {
-			return null;
+			return null; // failed
 		}
 
 		for (int i = 0; i < money.size(); i++) {
@@ -139,6 +142,49 @@ public class Purse {
 	}
 
 	/**
+	 * Withdraw the requested amount of money with the same currency of as the
+	 * parameter only. Return an array of Valuable withdrawn from purse, or
+	 * return null if cannot withdraw the amount requested.
+	 * 
+	 * @param amount
+	 *            is the amount to withdraw with currency.
+	 * @return array of Valuable objects for money withdrawn, or null if cannot
+	 *         withdraw requested amount.
+	 */
+	public Valuable[] withdraw(Valuable amount) {
+
+		Collections.sort(money, sortedMoney);
+
+		List<Valuable> curList = MoneyUtil.filterByCurrency(money, amount.getCurrency());
+		List<Valuable> temporaryList = new ArrayList<Valuable>();
+
+		if (amount.getValue() <= 0) {
+			return null;
+		}
+
+		double wd = amount.getValue();
+		for (Valuable v : curList) {
+			if (v.getValue() <= wd) {
+				temporaryList.add(v);
+				wd -= v.getValue();
+			}
+		}
+
+		// Check to see if we successfully found exact amount
+		if (amount.getValue() != 0) {
+			return null; // failed
+		}
+
+		for (Valuable v : temporaryList) {
+			money.remove(v);
+		}
+
+		Valuable[] array = new Valuable[temporaryList.size()];
+		temporaryList.toArray(array);
+		return array;
+	}
+
+	/**
 	 * toString returns a string description of the purse contents. It can
 	 * return whatever is a useful description.
 	 */
@@ -146,4 +192,12 @@ public class Purse {
 		return "Balance : " + getBalance();
 	}
 
+	public static void main(String[] args) {
+		Purse p = new Purse(10);
+		Money m = new Coin(2, "Baht");
+		Money m1 = new BankNote(2, "Baht");
+		System.out.println(m.equals(m1));
+		System.out.println(m.getClass());
+
+	}
 }
