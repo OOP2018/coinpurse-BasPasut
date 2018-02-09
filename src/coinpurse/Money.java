@@ -57,8 +57,8 @@ public class Money implements Valuable {
 	public boolean equals(Object arg) {
 		if (arg == null)
 			return false;
-//		if (this.getClass() != arg.getClass())
-//			return false;
+		// if (this.getClass() != arg.getClass())
+		// return false;
 		Money m = (Money) arg;
 		return ((m.getValue() == this.getValue()) && m.getCurrency().equalsIgnoreCase(this.getCurrency()));
 	}
@@ -71,7 +71,8 @@ public class Money implements Valuable {
 	 * @param v
 	 *            is the valuable that want to compare.
 	 * 
-	 * @return
+	 * @return 0 if both monetary have the same currency and same value, 1 if it
+	 *         is greater than other, and -1 if it is less than other.
 	 */
 	public int compareTo(Valuable v) {
 		if (v == null)

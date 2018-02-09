@@ -191,20 +191,5 @@ public class Purse {
 	public String toString() {
 		return "Balance : " + getBalance();
 	}
-
-	public static void main(String[] args) {
-		Purse p = new Purse(10);
-		p.insert(new Coin(1,"Baht"));
-		p.insert(new Coin(2,"Dollar"));
-		p.insert(new Coin(4,"Baht"));
-		p.insert(new Coin(5,"Dollar"));
-		p.insert(new Coin(8,"Baht"));
-		p.insert(new Coin(10,"Baht"));
-		p.insert(new BankNote(30,"Baht"));
-		p.withdraw(new Coin(13,"Baht"));
-		System.out.println(p.toString());
-		System.out.println(money);
-		
-
-	}
+	
 }
