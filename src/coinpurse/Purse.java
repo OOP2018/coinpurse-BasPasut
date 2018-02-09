@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Purse {
 	/** Collection of objects in the purse. */
-	private List<Valuable> money;
+	private static List<Valuable> money;
 
 	private Comparator<Valuable> sortedMoney;
 
@@ -155,14 +155,14 @@ public class Purse {
 
 		Collections.sort(money, sortedMoney);
 
+		double wd = amount.getValue();
 		List<Valuable> curList = MoneyUtil.filterByCurrency(money, amount.getCurrency());
 		List<Valuable> temporaryList = new ArrayList<Valuable>();
 
-		if (amount.getValue() <= 0) {
+		if (wd <= 0) {
 			return null;
 		}
 
-		double wd = amount.getValue();
 		for (Valuable v : curList) {
 			if (v.getValue() <= wd) {
 				temporaryList.add(v);
@@ -171,7 +171,7 @@ public class Purse {
 		}
 
 		// Check to see if we successfully found exact amount
-		if (amount.getValue() != 0) {
+		if (wd != 0) {
 			return null; // failed
 		}
 
@@ -194,10 +194,17 @@ public class Purse {
 
 	public static void main(String[] args) {
 		Purse p = new Purse(10);
-		Money m = new Coin(2, "Baht");
-		Money m1 = new BankNote(2, "Baht");
-		System.out.println(m.equals(m1));
-		System.out.println(m.getClass());
+		p.insert(new Coin(1,"Baht"));
+		p.insert(new Coin(2,"Dollar"));
+		p.insert(new Coin(4,"Baht"));
+		p.insert(new Coin(5,"Dollar"));
+		p.insert(new Coin(8,"Baht"));
+		p.insert(new Coin(10,"Baht"));
+		p.insert(new BankNote(30,"Baht"));
+		p.withdraw(new Coin(13,"Baht"));
+		System.out.println(p.toString());
+		System.out.println(money);
+		
 
 	}
 }
