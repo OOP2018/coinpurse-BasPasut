@@ -6,14 +6,14 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * A purse contains coins and bank notes. You can insert coins or bank notes,
- * withdraw money, check the balance, and check if the purse is full.
+ * A purse contains money. You can insert money, withdraw money, check the
+ * balance, and check if the purse is full.
  * 
  * @author Pasut Kittiprapas
  */
 public class Purse {
 	/** Collection of objects in the purse. */
-	private static List<Valuable> money;
+	private List<Valuable> money;
 
 	private Comparator<Valuable> sortedMoney;
 
@@ -27,7 +27,7 @@ public class Purse {
 	 * Create a purse with a specified capacity.
 	 * 
 	 * @param capacity
-	 *            is maximum number of coins or bank notes you can put in purse.
+	 *            is maximum number of money you can put in purse.
 	 */
 	public Purse(int capacity) {
 		this.capacity = capacity;
@@ -75,10 +75,7 @@ public class Purse {
 	 * @return true if purse is full.
 	 */
 	public boolean isFull() {
-		if (money.size() >= capacity) {
-			return true;
-		}
-		return false;
+		return (this.count() >= capacity);
 	}
 
 	/**
@@ -111,35 +108,8 @@ public class Purse {
 	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(double amount) {
-
-		Collections.sort(money, sortedMoney);
-		List<Valuable> curList = MoneyUtil.filterByCurrency(money, "Baht");
-		List<Valuable> temporaryList = new ArrayList<Valuable>();
-		
-		for (int i = 0; i < curList.size(); i++) {
-			Valuable m = curList.get(i);
-			if (m.getValue() <= amount) {
-				temporaryList.add(m);
-				amount -= m.getValue();
-			}
-		}
-
-		// Check to see if we successfully found exact amount
-		if (amount != 0) {
-			return null; // failed
-		}
-
-		for (int i = 0; i < money.size(); i++) {
-			for (int j = 0; j < temporaryList.size(); j++) {
-				if (temporaryList.get(j) == money.get(i)) {
-					money.remove(i);
-				}
-			}
-		}
-
-		Valuable[] array = new Valuable[temporaryList.size()];
-		temporaryList.toArray(array);
-		return array;
+		Valuable v = new Money(amount,"Baht");
+		return withdraw(v);
 	}
 
 	/**
@@ -160,6 +130,7 @@ public class Purse {
 		List<Valuable> curList = MoneyUtil.filterByCurrency(money, amount.getCurrency());
 		List<Valuable> temporaryList = new ArrayList<Valuable>();
 
+		
 		if (wd <= 0) {
 			return null;
 		}
@@ -191,6 +162,5 @@ public class Purse {
 	 */
 	public String toString() {
 		return "Balance : " + getBalance();
-	}
-	
+	}	
 }
