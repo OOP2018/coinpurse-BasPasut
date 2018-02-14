@@ -10,6 +10,7 @@ package coinpurse;
 public class BankNote extends Money {
 
 	private long serialNumber;
+	private static long nextSerialNumber = 1000000;
 
 	/**
 	 * Create a BankNote with specific value and currency.
@@ -19,7 +20,7 @@ public class BankNote extends Money {
 	 */
 	public BankNote(double value, String currency) {
 		super(value, currency);
-		this.serialNumber = 0;
+		this.serialNumber = nextSerialNumber++;
 	}
 	
 	/**
