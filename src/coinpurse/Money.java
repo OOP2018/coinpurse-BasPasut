@@ -57,8 +57,8 @@ public class Money implements Valuable {
 	public boolean equals(Object arg) {
 		if (arg == null)
 			return false;
-		// if (this.getClass() != arg.getClass())
-		// return false;
+		if (this.getClass() != arg.getClass())
+			return false;
 		Money m = (Money) arg;
 		return ((m.getValue() == this.getValue()) && m.getCurrency().equalsIgnoreCase(this.getCurrency()));
 	}
