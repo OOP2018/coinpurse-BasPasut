@@ -6,6 +6,8 @@ import java.util.Scanner;
  * User Interface for the Coin Purse. This class provides simple interactive
  * dialog for inserting and removing money to/from the purse, and displaying the
  * balance.
+ * 
+ * @author Pasut Kittiprapas
  */
 public class ConsoleDialog {
 	// default currency for this dialog
@@ -21,6 +23,9 @@ public class ConsoleDialog {
 	// to constructor)
 	// so don't create a Purse here.
 	private Purse purse;
+	private String currency;
+	private Valuable money;
+	private MoneyFactory factory = MoneyFactory.getInstance();
 
 	/**
 	 * Initialize a new Purse dialog.
@@ -31,13 +36,18 @@ public class ConsoleDialog {
 	public ConsoleDialog(Purse purse) {
 		this.purse = purse;
 	}
+	
+	public ConsoleDialog(Purse purse , String currency){
+		this.purse = purse;
+		this.currency = currency;
+	}
 
 	/** Run the user interface. */
 	public void run() {
 		String choice = "";
 		String prompt = FULL_PROMPT;
 		loop: while (true) {
-			System.out.printf("Purse contains %.2f %s\n", purse.getBalance(), CURRENCY);
+			System.out.printf("Purse contains %.2f %s\n", purse.getBalance(), currency);
 			if (purse.isFull())
 				System.out.println("Purse is FULL.");
 			// print a list of choices
@@ -77,17 +87,22 @@ public class ConsoleDialog {
 		// If so then use them without prompting for more.
 		String inline = console.nextLine().trim();
 		if (inline.isEmpty()) {
-			System.out.print("Enter value of coin(s) to deposit on one line [eg: 5 0.5 1]: ");
+			System.out.print("Enter value of money to deposit on one line [eg: 5 0.5 1]: ");
 			inline = console.nextLine();
 		}
 		// parse input line into numbers
 		Scanner scanline = new Scanner(inline);
 		while (scanline.hasNextDouble()) {
 			double value = scanline.nextDouble();
-			Valuable money = makeMoney(value);
+			try{
+			money = factory.createMoney(value);
 			System.out.printf("Deposit %s... ", money.toString());
 			boolean ok = purse.insert(money);
 			System.out.println((ok ? "ok" : "FAILED"));
+			}
+			catch(Exception e){
+				System.err.print("Do not have this BankNote or Coin in " + currency + " currency\n");
+			}
 		}
 		if (scanline.hasNext())
 			System.out.println("Invalid input: " + scanline.next());
@@ -127,12 +142,12 @@ public class ConsoleDialog {
 		scanline.close();
 	}
 
-	/** Make a Coin (or BankNote or whatever) using requested value. */
-	private Valuable makeMoney(double value) {
-		if (value >= 20) {
-			return new BankNote(value, CURRENCY);
-		}
-		return new Coin(value, CURRENCY);
-	}
+//	/** Make a Coin (or BankNote or whatever) using requested value. */
+//	private Valuable makeMoney(double value) {
+//		if (value >= 20) {
+//			return new BankNote(value, CURRENCY);
+//		}
+//		return new Coin(value, CURRENCY);
+//	}
 
 }

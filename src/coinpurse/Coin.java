@@ -24,7 +24,12 @@ public class Coin extends Money {
 	 * @return the value-currency (Ex. 50-Baht)
 	 */
 	public String toString() {
-		return getValue() + "-" + getCurrency();
+		if(getCurrency().equalsIgnoreCase("Ringgit")){
+			if(getValue() == 0.05 || getValue() == 0.1 || getValue() == 0.2 || getValue() == 0.5){
+				return getValue()*100 + "-Sen coin"; 
+			}
+		}
+		return getValue() + "-" + getCurrency() + " coin";
 
 	}
 
