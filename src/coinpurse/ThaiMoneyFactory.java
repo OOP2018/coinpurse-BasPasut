@@ -14,10 +14,10 @@ public class ThaiMoneyFactory extends MoneyFactory {
 	private static long nextSerialNumber = 1000000;
 
 	/**
-	 * Get an instance of MoneyFactory. This method returns an object of a
-	 * subclass.
+	 * Create new money object in the local currency.
 	 * 
-	 * @return an object of a subclass.
+	 * @param value
+	 * @throws IllegalArgumentException
 	 */
 	@Override
 	public Valuable createMoney(double value) {
@@ -31,7 +31,7 @@ public class ThaiMoneyFactory extends MoneyFactory {
 	}
 
 	/**
-	 * Create new money object in the local currency.
+	 * Accepts money value as a String and create money.
 	 * 
 	 * @param value
 	 * @throws IllegalArgumentException
