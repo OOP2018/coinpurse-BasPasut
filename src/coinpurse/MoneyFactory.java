@@ -9,6 +9,10 @@ package coinpurse;
 public abstract class MoneyFactory {
 
 	private static MoneyFactory factory;
+	
+	private MoneyFactory(){
+		
+	}
 
 	/**
 	 * Get an instance of MoneyFactory. This method returns an object of a
