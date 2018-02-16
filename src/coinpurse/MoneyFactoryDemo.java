@@ -4,6 +4,7 @@ public class MoneyFactoryDemo {
 	public static void main(String[] args) {
 		MoneyFactory mf = MoneyFactory.getInstance();
 		MoneyFactory mf2 = MoneyFactory.getInstance();
+		
 		Valuable m = mf.createMoney(10);
 		Valuable m2 = mf.createMoney("10");
 //		Valuable m3 = mf.createMoney("abc");
