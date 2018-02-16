@@ -30,17 +30,4 @@ public class MalayMoneyFactory extends MoneyFactory {
 			throw new IllegalArgumentException();
 		}
 	}
-
-	/**
-	 * Accepts money value as a String and create money.
-	 * 
-	 * @param value
-	 * @throws IllegalArgumentException
-	 */
-	@Override
-	public Valuable createMoney(String value) {
-		double dvalue = Double.parseDouble(value);
-		return createMoney(dvalue);
-	}
-
 }

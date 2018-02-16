@@ -65,7 +65,7 @@ public class ConsoleDialog {
 				withdrawDialog();
 				break;
 			case "?":
-				System.out.println(purse.toString());
+				System.out.print(purse.toString());
 				break;
 			case "q":
 				break loop; // leave the while loop
@@ -101,7 +101,7 @@ public class ConsoleDialog {
 			System.out.println((ok ? "ok" : "FAILED"));
 			}
 			catch(Exception e){
-				System.err.print("Do not have this BankNote or Coin in " + currency + " currency\n");
+				System.err.print("\nDo not have this BankNote or Coin in " + currency + " currency\n");
 			}
 		}
 		if (scanline.hasNext())

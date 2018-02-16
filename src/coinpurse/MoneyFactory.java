@@ -34,7 +34,16 @@ public abstract class MoneyFactory {
 	 * @param value
 	 * @throws IllegalArgumentException
 	 */
-	public abstract Valuable createMoney(String value);
+	public Valuable createMoney(String value){
+		double stringMoney;
+		try{
+			stringMoney = Double.parseDouble(value);
+		}
+		catch(IllegalArgumentException e){
+			throw new IllegalArgumentException();
+		}
+		return createMoney(stringMoney);
+	}
 
 	/**
 	 * 

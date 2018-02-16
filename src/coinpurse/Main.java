@@ -9,6 +9,9 @@ import java.util.ResourceBundle;
  */
 public class Main {
 
+	private final static String THAICURRENCY = "BAHT";
+	private final static String MALAYCURRENCY = "RINGGIT";
+	
     /**
      * Configure and start the application.
      * @param args not used
@@ -30,9 +33,9 @@ public class Main {
 		MoneyFactory.setMoneyFactory(factory);
 		ConsoleDialog consoleDialog;
 		if (factoryclass.equalsIgnoreCase("coinpurse.MalayMoneyFactory")) {
-			consoleDialog = new ConsoleDialog(purse, "Riggit");
+			consoleDialog = new ConsoleDialog(purse, MALAYCURRENCY);
 		} else {
-			consoleDialog = new ConsoleDialog(purse, "Baht");
+			consoleDialog = new ConsoleDialog(purse, THAICURRENCY);
 		}
 		consoleDialog.run();
 

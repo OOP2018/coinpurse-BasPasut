@@ -17,13 +17,13 @@ import org.junit.Test;
  * To run these tests, right click on this file (in Project panel)
  * and choose Run As -> JUnit test
  * 
- * @author  Resident Evil
+ * @author  Pasut Kittiprapas
  * @version 2018.01.19
  */
 public class PurseTest {
 	/** tolerance for comparing two double values */
 	private static final double TOL = 1.0E-6;
-	private static final String CURRENCY = "BTC";
+	private static final String CURRENCY = "BAHT";
 	
     /**
      * Sets up the test fixture.
@@ -38,13 +38,18 @@ public class PurseTest {
     private Coin makeCoin(double value) {
 		return new Coin(value,CURRENCY);
 	}
+    
+    /** Make a banknote with the default currency. To save typing "new Coin(...)" */
+    private BankNote makeBankNote(double value){
+    	return new BankNote(value,CURRENCY);
+    }
 
     /** Easy test that the Purse constructor is working. */
     @Test
     public void testConstructor()
     {
-        Purse purse = new Purse(3);
-        assertEquals(3, purse.getCapacity());
+        Purse purse = new Purse(6);
+        assertEquals(6, purse.getCapacity());
         assertEquals(false, purse.isFull());
         assertEquals(0, purse.count());
     }
@@ -55,14 +60,21 @@ public class PurseTest {
     @Test
     public void testInsert()
     {
-        Purse purse = new Purse(3);
-        Coin coin1 = makeCoin(5);
-        Coin coin2 = makeCoin(10);
-        Coin coin3 = makeCoin(1);
+        Purse purse = new Purse(6);
+        Valuable coin1 = makeCoin(5);
+        Valuable coin2 = makeCoin(10);
+        Valuable coin3 = makeCoin(1);
+        Valuable banknote1 = makeBankNote(20);
+        Valuable banknote2 = makeBankNote(50);
+        Valuable banknote3 = makeBankNote(100);
+        assertTrue( purse.insert(banknote2));
+        assertTrue( purse.insert(banknote3));
+        assertTrue( purse.insert(banknote1));
         assertTrue( purse.insert(coin1));
         assertTrue( purse.insert(coin3));
         assertTrue( purse.insert(coin2));
-        assertEquals( 3, purse.count() );
+
+        assertEquals( 6, purse.count() );
         // purse is full so insert should fail
         assertFalse( purse.insert(makeCoin(1)) );
     }
@@ -73,8 +85,10 @@ public class PurseTest {
     public void testInsertNoValue()
     {
         Purse purse = new Purse(3);
-        Coin fakeCoin = new Coin(0, CURRENCY);
+        Valuable fakeCoin = new Coin(0, CURRENCY);
+        Valuable fakeBankNote = new BankNote(0, CURRENCY);
         assertFalse( purse.insert(fakeCoin) );
+        assertFalse( purse.insert(fakeBankNote) );
     }
 
 
@@ -101,34 +115,50 @@ public class PurseTest {
 	 *  since spec doesn't say anything about this.
 	 */
 	@Test(timeout=1000)
-	public void testInsertSameCoin()
+	public void testInsertSameValuable()
 	{
-		int capacity = 5;
+		int capacity = 6;
 		double value = 10.0;
 		Purse purse = new Purse(capacity);
-		Coin coin = new Coin(value, "THB");
+		Valuable coin = new Coin(value, "THB");
+		Valuable banknote = new BankNote(value, "THB");
 		assertTrue( purse.insert(coin) );
 		assertTrue( purse.insert(coin) ); // should be allowed
 		assertTrue( purse.insert(coin) ); // should be allowed
-		assertTrue( purse.insert(coin) ); // should be allowed
-		assertTrue( purse.insert(coin) ); // should be allowed
-		assertEquals( purse.getBalance(), 5*value, TOL);
+		assertTrue( purse.insert(banknote) ); // should be allowed
+		assertTrue( purse.insert(banknote) ); // should be allowed
+		assertTrue( purse.insert(banknote) ); // should be allowed
+		assertEquals( purse.getBalance(), 6*value, TOL);
 	}
 
-	/** Add one coin and remove it. */
+	/** Test 1st Add one coin and remove it. 
+	 * 	Test 2nd Add one BankNote and remove it. 
+	 * */
 	@Test(timeout=1000)
 	public void testEasyWithdraw() {
 		Purse purse = new Purse(10);
 		double [] values = {1, 20, 0.5, 10}; // values of coins we will insert
 		
 		for(double value : values) {
-			Coin coin = makeCoin(value);
+			Valuable coin = makeCoin(value);
 			assertTrue(purse.insert(coin));
 			assertEquals(value,  purse.getBalance(), TOL);
 			Valuable [] result = purse.withdraw(value);
 			assertTrue( result != null );
 			assertEquals( 1, result.length );
 			assertSame(  coin, result[0] ); // should be same object
+			assertEquals( 0, purse.getBalance(), TOL );
+		}
+		
+		double [] values2 = {10, 200, 0.5, 100};
+		for(double value2 : values2) {
+			Valuable note = makeBankNote(value2);
+			assertTrue(purse.insert(note));
+			assertEquals(value2,  purse.getBalance(), TOL);
+			Valuable [] result = purse.withdraw(value2);
+			assertTrue( result != null );
+			assertEquals( 1, result.length );
+			assertSame(  note, result[0] ); // should be same object
 			assertEquals( 0, purse.getBalance(), TOL );
 		}
 	}
@@ -138,12 +168,12 @@ public class PurseTest {
 	@Test(timeout=1000)
 	public void testMultiWithdraw() {
 		Purse purse = new Purse(10);
-		Coin[] coins = { makeCoin(5.0), makeCoin(10.0), makeCoin(1.0), makeCoin(5.0) };
+		Valuable[] money = { makeCoin(5.0), makeCoin(10.0), makeBankNote(20),makeBankNote(50)};
 		// insert them all
-		for(Coin coin: coins) assertTrue( purse.insert(coin) );
+		for(Valuable v: money) assertTrue( purse.insert(v) );
 		
-		double amount1 = coins[1].getValue() + coins[3].getValue();
-		double amount2 = coins[0].getValue() + coins[2].getValue();
+		double amount1 = money[1].getValue() + money[3].getValue();
+		double amount2 = money[0].getValue() + money[2].getValue();
 		assertEquals(amount1+amount2, purse.getBalance(), TOL );
 		
 		Valuable [] wd1 = purse.withdraw(amount1);
@@ -156,6 +186,27 @@ public class PurseTest {
 		assertEquals(0, purse.getBalance(), TOL );
 	}
 	
+	/** Add 4 coins and then withdraw in pairs, but not in same order. */
+	@Test(timeout=1000)
+	public void testMultiWithdrawBankNoteAndCoin() {
+		Purse purse = new Purse(10);
+		Valuable[] money = { makeBankNote(50.0), makeCoin(10.0), makeBankNote(20.0), makeCoin(5.0) };
+		// insert them all
+		for(Valuable coin: money) assertTrue( purse.insert(coin) );
+		
+		double amount1 = money[1].getValue() + money[3].getValue();
+		double amount2 = money[0].getValue() + money[2].getValue();
+		assertEquals(amount1+amount2, purse.getBalance(), TOL );
+		
+		Valuable [] wd1 = purse.withdraw(amount1);
+		assertEquals(amount1, sum(wd1), TOL );
+		
+		assertEquals(amount2, purse.getBalance(), TOL );
+		Valuable [] wd2 = purse.withdraw(amount2);
+		
+		// should be empty now
+		assertEquals(0, purse.getBalance(), TOL );
+	}
 
 	/** Withdraw full amount in purse, using varying numbers of objects. */
 	@Test(timeout=1000)
@@ -163,14 +214,14 @@ public class PurseTest {
 		Purse purse = new Purse(10);
 		// Coins we want to insert and then withdraw.
 		// Use values such that greedy will succeed, but not monotonic
-		List<Coin> coins = Arrays.asList(
-				makeCoin(1.0), makeCoin(0.5), makeCoin(10.0), makeCoin(0.25), makeCoin(5.0)
+		List<Valuable> money = Arrays.asList(
+				makeCoin(1.0), makeBankNote(0.5), makeCoin(10.0), makeBankNote(0.25), makeCoin(5.0)
 				);
 		// num = number of coins to insert and then withdraw
-		for(int num=1; num <= coins.size(); num++) {
+		for(int num=1; num <= money.size(); num++) {
 			double amount = 0.0;
-			List<Coin> subList = coins.subList(0, num);
-			for(Coin c: subList) {
+			List<Valuable> subList = money.subList(0, num);
+			for(Valuable c: subList) {
 				purse.insert(c);
 				amount += c.getValue();
 			}
@@ -203,15 +254,13 @@ public class PurseTest {
 	
 	/**
 	 * Sum the value of some coins.
-	 * @param coins array of coins
+	 * @param val array of coins
 	 * @return sum of values of the coins
 	 */
-	private double sum(Valuable[] valuable)  {
-		if (valuable == null) return 0.0;
+	private double sum(Valuable[] val)  {
+		if (val == null) return 0.0;
 		double sum = 0;
-		for(Valuable v: valuable) if (v != null) sum += v.getValue();
+		for(Valuable c: val) if (c != null) sum += c.getValue();
 		return sum;
 	}
 }
-
-
