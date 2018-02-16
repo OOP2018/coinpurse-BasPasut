@@ -1,5 +1,7 @@
 package coinpurse;
 
+import java.util.ResourceBundle;
+
 /**
  * This class have responsible to create any kind of money.
  * 
@@ -8,10 +10,9 @@ package coinpurse;
  */
 public abstract class MoneyFactory {
 
-	private static MoneyFactory factory;
-	
-	private MoneyFactory(){
-		
+	private static MoneyFactory factory = null;
+
+	protected MoneyFactory() {
 	}
 
 	/**
@@ -21,6 +22,20 @@ public abstract class MoneyFactory {
 	 * @return an object of a subclass.
 	 */
 	public static MoneyFactory getInstance() {
+		ResourceBundle bundle = ResourceBundle.getBundle("purse");
+		String factoryClass = bundle.getString("moneyfactory");
+		try {
+			factory = (MoneyFactory) Class.forName(factoryClass).newInstance();
+		} catch (ClassCastException e) {
+			System.out.println(factoryClass + " is not type MoneyFactory");
+		} catch (Exception ex) {
+			System.out.println("Error creating MoneyFactory " + ex.getMessage());
+		}
+		if (factory == null) {
+			System.exit(0);
+		} else {
+			setMoneyFactory(factory);
+		}
 		return factory;
 	}
 
@@ -38,13 +53,12 @@ public abstract class MoneyFactory {
 	 * @param value
 	 * @throws IllegalArgumentException
 	 */
-	public Valuable createMoney(String value){
+	public Valuable createMoney(String value) {
 		double stringMoney;
-		try{
+		try {
 			stringMoney = Double.parseDouble(value);
-		}
-		catch(IllegalArgumentException e){
-			throw new IllegalArgumentException();
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
 		return createMoney(stringMoney);
 	}
