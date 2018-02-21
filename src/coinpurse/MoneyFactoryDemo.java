@@ -2,6 +2,7 @@ package coinpurse;
 
 public class MoneyFactoryDemo {
 	public static void main(String[] args) {
+		MoneyFactory.setMoneyFactory(new ThaiMoneyFactory());
 		MoneyFactory mf = MoneyFactory.getInstance();
 		MoneyFactory mf2 = MoneyFactory.getInstance();
 		
@@ -12,6 +13,9 @@ public class MoneyFactoryDemo {
 		Valuable nm = mf2.createMoney(10);
 		Valuable nm2 = mf2.createMoney("10");
 //		Valuable nm3 = mf2.createMoney("abc");
+		
+		//test whether MoneyFactory is singleton or not
+		System.out.println(mf.equals(mf2));
 		
 		System.out.println(m.toString());
 		System.out.println(m2.toString());
