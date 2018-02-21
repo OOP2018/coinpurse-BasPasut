@@ -17,6 +17,8 @@ public class Main {
      * @param args not used
      */
     public static void main( String[] args ) {
+    	
+    	
 		Purse purse = new Purse(10);
 		ResourceBundle bundle = ResourceBundle.getBundle("purse");
 		String factoryclass = bundle.getString("moneyfactory");

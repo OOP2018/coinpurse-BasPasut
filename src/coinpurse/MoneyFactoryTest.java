@@ -65,6 +65,7 @@ public class MoneyFactoryTest {
 	 */
 	@Test
 	public void testCreateMoneyThai() {
+		MoneyFactory.setMoneyFactory(new ThaiMoneyFactory());
 		double a = 1;
 		double b = 10;
 		double c = 20;
@@ -88,6 +89,7 @@ public class MoneyFactoryTest {
 	 */
 	@Test
 	public void testCreateMoneyThaiString() {
+		MoneyFactory.setMoneyFactory(new ThaiMoneyFactory());
 		String a = "1";
 		String b = "10";
 		String c = "20";
@@ -111,6 +113,7 @@ public class MoneyFactoryTest {
 	 */
 	@Test
 	public void testCreateMoneyMalay() {
+		MoneyFactory.setMoneyFactory(new MalayMoneyFactory());
 		double a = 0.05;
 		double b = 0.1;
 		double c = 20;
@@ -135,6 +138,7 @@ public class MoneyFactoryTest {
 	 */
 	@Test
 	public void testCreateMoneyMalayString() {
+		MoneyFactory.setMoneyFactory(new MalayMoneyFactory());
 		String a = "0.05";
 		String b = "0.1";
 		String c = "20";
