@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 public abstract class MoneyFactory {
 
-	private static MoneyFactory factory;
+	private static MoneyFactory factory = new ThaiMoneyFactory();
 
 	protected MoneyFactory() {
 	}
