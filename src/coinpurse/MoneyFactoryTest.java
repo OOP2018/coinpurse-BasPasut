@@ -26,8 +26,6 @@ import org.junit.Test;
 public class MoneyFactoryTest {
 	
 	private static final double TOL = 1.0E-6;
-	private static final String CURRENCY = "BAHT";
-	private MoneyFactory mf = MoneyFactory.getInstance();
 
 	/**
 	 * Sets up the test fixture. Called before every test method.
@@ -44,7 +42,7 @@ public class MoneyFactoryTest {
 	 * @param value
 	 * @return
 	 */
-	public Valuable makeMoney(double value) {
+	public Valuable makeMoney(double value,MoneyFactory mf) {
 		return mf.createMoney(value);
 	}
 
@@ -55,7 +53,7 @@ public class MoneyFactoryTest {
 	 * @param value
 	 * @return
 	 */
-	public Valuable makeMoney(String value) {
+	public Valuable makeMoney(String value,MoneyFactory mf) {
 		return mf.createMoney(value);
 	}
 
@@ -66,15 +64,16 @@ public class MoneyFactoryTest {
 	@Test
 	public void testCreateMoneyThai() {
 		MoneyFactory.setMoneyFactory(new ThaiMoneyFactory());
+		MoneyFactory mf = MoneyFactory.getInstance();
 		double a = 1;
 		double b = 10;
 		double c = 20;
 		double d = 50;
 
-		Valuable v = makeMoney(a);
-		Valuable v1 = makeMoney(b);
-		Valuable v2 = makeMoney(c);
-		Valuable v3 = makeMoney(d);
+		Valuable v = makeMoney(a,mf);
+		Valuable v1 = makeMoney(b,mf);
+		Valuable v2 = makeMoney(c,mf);
+		Valuable v3 = makeMoney(d,mf);
 
 		assertEquals("1.0-Baht coin", v.toString());
 		assertEquals("10.0-Baht coin", v1.toString());
@@ -90,15 +89,16 @@ public class MoneyFactoryTest {
 	@Test
 	public void testCreateMoneyThaiString() {
 		MoneyFactory.setMoneyFactory(new ThaiMoneyFactory());
+		MoneyFactory mf = MoneyFactory.getInstance();
 		String a = "1";
 		String b = "10";
 		String c = "20";
 		String d = "50";
 
-		Valuable v = makeMoney(a);
-		Valuable v1 = makeMoney(b);
-		Valuable v2 = makeMoney(c);
-		Valuable v3 = makeMoney(d);
+		Valuable v = makeMoney(a,mf);
+		Valuable v1 = makeMoney(b,mf);
+		Valuable v2 = makeMoney(c,mf);
+		Valuable v3 = makeMoney(d,mf);
 
 		assertEquals("1.0-Baht coin", v.toString());
 		assertEquals("10.0-Baht coin", v1.toString());
@@ -114,15 +114,16 @@ public class MoneyFactoryTest {
 	@Test
 	public void testCreateMoneyMalay() {
 		MoneyFactory.setMoneyFactory(new MalayMoneyFactory());
+		MoneyFactory mf2 = MoneyFactory.getInstance();
 		double a = 0.05;
 		double b = 0.1;
 		double c = 20;
 		double d = 50;
 
-		Valuable v = makeMoney(a);
-		Valuable v1 = makeMoney(b);
-		Valuable v2 = makeMoney(c);
-		Valuable v3 = makeMoney(d);
+		Valuable v = makeMoney(a,mf2);
+		Valuable v1 = makeMoney(b,mf2);
+		Valuable v2 = makeMoney(c,mf2);
+		Valuable v3 = makeMoney(d,mf2);
 
 		assertEquals("5.0-Sen coin", v.toString());
 		assertEquals("10.0-Sen coin", v1.toString());
@@ -139,15 +140,16 @@ public class MoneyFactoryTest {
 	@Test
 	public void testCreateMoneyMalayString() {
 		MoneyFactory.setMoneyFactory(new MalayMoneyFactory());
+		MoneyFactory mf2 = MoneyFactory.getInstance();
 		String a = "0.05";
 		String b = "0.1";
 		String c = "20";
 		String d = "50";
 
-		Valuable v = makeMoney(a);
-		Valuable v1 = makeMoney(b);
-		Valuable v2 = makeMoney(c);
-		Valuable v3 = makeMoney(d);
+		Valuable v = makeMoney(a,mf2);
+		Valuable v1 = makeMoney(b,mf2);
+		Valuable v2 = makeMoney(c,mf2);
+		Valuable v3 = makeMoney(d,mf2);
 
 		assertEquals("5.0-Sen coin", v.toString());
 		assertEquals("10.0-Sen coin", v1.toString());
@@ -163,13 +165,15 @@ public class MoneyFactoryTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testExceptionCase() {
+		MoneyFactory.setMoneyFactory(new ThaiMoneyFactory());
+		MoneyFactory mf = MoneyFactory.getInstance();
 		String a = "abc";
 		String b = "1000000";
 		double c = -1;
 
-		Valuable v = makeMoney(a);
-		Valuable v2 = makeMoney(b);
-		Valuable v3 = makeMoney(c);
+		Valuable v = makeMoney(a,mf);
+		Valuable v2 = makeMoney(b,mf);
+		Valuable v3 = makeMoney(c,mf);
 		
 
 	}

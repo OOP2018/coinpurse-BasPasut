@@ -17,20 +17,31 @@ public class Main {
      * @param args not used
      */
     public static void main( String[] args ) {
-    	
-    	
+    	Main.init();
+    }
+    
+    public static void init(){
+    	MoneyFactory instance = null;
 		Purse purse = new Purse(10);
 		ResourceBundle bundle = ResourceBundle.getBundle("purse");
 		String factoryclass = bundle.getString("moneyfactory");
+		try {
+			instance = (MoneyFactory) Class.forName(factoryclass).newInstance();
+		} catch (ClassCastException cce) {
+			System.out.println(factoryclass + " is not type MoneyFactory");
+		} catch (Exception ex) {
+			System.out.println("Error creating MoneyFactory " + ex.getMessage());
+		}
+		if (instance == null)
+			System.exit(1);
+		MoneyFactory.setMoneyFactory(instance);
 		ConsoleDialog consoleDialog;
-		if(factoryclass.equalsIgnoreCase("coinpurse.ThaiMoneyFactory")){
-			consoleDialog = new ConsoleDialog(purse,THAICURRENCY);
+		if (factoryclass.equalsIgnoreCase("coinpurse.MalayMoneyFactory")) {
+			consoleDialog = new ConsoleDialog(purse, MALAYCURRENCY);
+		} else {
+			consoleDialog = new ConsoleDialog(purse, THAICURRENCY);
 		}
-		else{
-			consoleDialog = new ConsoleDialog(purse,MALAYCURRENCY);
-		}
-		
-		consoleDialog.run();
 
+		consoleDialog.run();
     }
  }

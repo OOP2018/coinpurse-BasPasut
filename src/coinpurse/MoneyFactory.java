@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 public abstract class MoneyFactory {
 
-	private static MoneyFactory factory = null;
+	private static MoneyFactory factory;
 
 	protected MoneyFactory() {
 	}
@@ -22,20 +22,6 @@ public abstract class MoneyFactory {
 	 * @return an object of a subclass.
 	 */
 	public static MoneyFactory getInstance() {
-		ResourceBundle bundle = ResourceBundle.getBundle("purse");
-		String factoryClass = bundle.getString("moneyfactory");
-		try {
-			factory = (MoneyFactory) Class.forName(factoryClass).newInstance();
-		} catch (ClassCastException e) {
-			System.out.println(factoryClass + " is not type MoneyFactory");
-		} catch (Exception ex) {
-			System.out.println("Error creating MoneyFactory " + ex.getMessage());
-		}
-		if (factory == null) {
-			System.exit(0);
-		} else {
-			setMoneyFactory(factory);
-		}
 		return factory;
 	}
 
