@@ -78,6 +78,7 @@ public class WithdrawStrategyTest {
 		assertTrue(wd != null);
 		assertEquals(2, wd.size());
 		assertEquals(55, sum(wd),TOL);
+		assertEquals(55, sum(money),TOL);
 		assertEquals(sum(wd), sum(money),TOL);
 	}
 

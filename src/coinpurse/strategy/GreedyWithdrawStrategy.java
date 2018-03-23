@@ -60,10 +60,6 @@ public class GreedyWithdrawStrategy implements WithdrawStrategy{
 			return null; // failed
 		}
 
-		for (Valuable v : temporaryList) {
-			items.remove(v);
-		}
-
 		return temporaryList;
 	}
 
