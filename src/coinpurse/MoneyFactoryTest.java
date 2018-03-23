@@ -175,7 +175,6 @@ public class MoneyFactoryTest {
 		Valuable v2 = makeMoney(b,mf);
 		Valuable v3 = makeMoney(c,mf);
 		
-
 	}
 	
 }

@@ -1,6 +1,8 @@
 package coinpurse;
 
 import java.util.ResourceBundle;
+import coinpurse.strategy.GreedyWithdrawStrategy;
+
 
 /**
  * A main class to create objects and connect objects together.

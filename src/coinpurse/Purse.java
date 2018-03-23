@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import coinpurse.strategy.GreedyWithdrawStrategy;
+import coinpurse.strategy.RecursiveWithdrawStrategy;
+import coinpurse.strategy.WithdrawStrategy;
+
 /**
  * A purse contains money. You can insert money, withdraw money, check the
  * balance, and check if the purse is full.
@@ -13,9 +17,8 @@ import java.util.List;
  */
 public class Purse {
 	/** Collection of objects in the purse. */
-	private List<Valuable> money;
-
-	private Comparator<Valuable> sortedMoney;
+	private List<Valuable> money;	
+	private WithdrawStrategy wds;
 
 	/**
 	 * Capacity is maximum number of items the purse can hold. Capacity is set
@@ -32,8 +35,7 @@ public class Purse {
 	public Purse(int capacity) {
 		this.capacity = capacity;
 		this.money = new ArrayList<>();
-		this.sortedMoney = new ValueComparator();
-
+		wds = new GreedyWithdrawStrategy();
 	}
 
 	/**
@@ -66,6 +68,10 @@ public class Purse {
 	 */
 	public int getCapacity() {
 		return capacity;
+	}
+	
+	public void setStrategy(WithdrawStrategy wds){
+		this.wds = wds;
 	}
 
 	/**
@@ -108,7 +114,7 @@ public class Purse {
 	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(double amount) {
-		Valuable v = new Money(amount,"Baht");
+		Valuable v = new Money(amount, "Baht");
 		return withdraw(v);
 	}
 
@@ -123,36 +129,20 @@ public class Purse {
 	 *         withdraw requested amount.
 	 */
 	public Valuable[] withdraw(Valuable amount) {
-
-		Collections.sort(money, sortedMoney);
-
-		double wd = amount.getValue();
-		List<Valuable> curList = MoneyUtil.filterByCurrency(money, amount.getCurrency());
-		List<Valuable> temporaryList = new ArrayList<Valuable>();
-
+		List<Valuable> wdList = null;
+		if(amount.getValue() >= 0){
+		wdList = wds.withdraw(amount, money);
+		}
 		
-		if (wd <= 0) {
+		if(wdList == null){
 			return null;
-		}
-
-		for (Valuable v : curList) {
-			if (v.getValue() <= wd) {
-				temporaryList.add(v);
-				wd -= v.getValue();
-			}
-		}
-
-		// Check to see if we successfully found exact amount
-		if (wd != 0) {
-			return null; // failed
-		}
-
-		for (Valuable v : temporaryList) {
+		}		
+		
+		for (Valuable v : wdList) {
 			money.remove(v);
 		}
-
-		Valuable[] array = new Valuable[temporaryList.size()];
-		temporaryList.toArray(array);
+		Valuable[] array = new Valuable[wdList.size()];
+		wdList.toArray(array);
 		return array;
 	}
 
@@ -161,6 +151,6 @@ public class Purse {
 	 * return whatever is a useful description.
 	 */
 	public String toString() {
-		return "Balance : " + getBalance();
-	}	
+		return "Balance : " + getBalance() + "\n";
+	}
 }
