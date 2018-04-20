@@ -30,7 +30,7 @@ public class RecursiveWithdrawStrategy implements WithdrawStrategy {
 	 */
 	@Override
 	public List<Valuable> withdraw(Valuable amount, List<Valuable> money) {
-		MoneyUtil.filterByCurrency(money, amount.getCurrency());
+		money = MoneyUtil.filterByCurrency(money, amount.getCurrency());
 		return withdrawHelper(amount.getValue(), money);
 	}
 
